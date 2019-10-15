@@ -59,15 +59,11 @@ class MainActivity : AppCompatActivity() {
         inputTextBottom = findViewById(R.id.editText2)
 
         btnGo = findViewById(R.id.go)
-
         btnLoad = findViewById(R.id.load)
         btnSave = findViewById(R.id.save)
         btnShare = findViewById(R.id.share)
         btnClear = findViewById(R.id.btnClear)
 
-        btnSave.isEnabled = false
-        btnShare.isEnabled = false
-        btnGo.isEnabled = false
         btnGo.text = getString(R.string.load_image_first_msg)
 
         btnLoad.setOnClickListener {
