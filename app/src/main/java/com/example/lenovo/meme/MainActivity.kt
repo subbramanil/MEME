@@ -20,6 +20,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    //region view references
     private lateinit var btnLoad: Button
     private lateinit var btnSave: Button
     private lateinit var btnShare: Button
@@ -30,8 +31,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var inputTextTop: EditText
     private lateinit var inputTextBottom: EditText
     private lateinit var ivMemePreview: ImageView
+    //endregion
+
+    //region state variables
     private var imageLoaded = false
     private var textAdded = false
+    //endregion
 
     //region Life-Cycle Methods
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +92,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     btnShare.isEnabled = true
                 }
             }
-
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -105,6 +109,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //endregion
+
+    //region Listeners
 
     override fun onClick(view: View?) {
         when (view?.id) {
@@ -160,6 +166,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //endregion
+
     //region utils
 
     private fun requestPermissions() {
@@ -191,10 +199,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
     //endregion
 
+    //region Constants
+
     companion object {
 
         private const val MY_PERMISSION_REQUEST = 1
         private const val RESULT_LOAD_IMAGE = 2
         private const val MEME_DIR = "MEME"
     }
+
+    //endregion
 }
