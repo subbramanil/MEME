@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputTextTop: EditText
     private lateinit var inputTextBottom: EditText
     private lateinit var ivMemePreview: ImageView
-    private var currentImage = ""
     private var imageLoaded = false
     private var textAdded = false
 
@@ -79,10 +78,9 @@ class MainActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val content = findViewById<View>(R.id.meme_preview)
             val bitmap = getScreenShot(content)
-            currentImage = "meme" + System.currentTimeMillis() + ".png"
-            if(MemeTools.store(bitmap, currentImage)) {
+            val dirPath = baseContext.getExternalFilesDir(memeDir)
+            if (MemeTools.storeMeme(bitmap, dirPath)) {
                 Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show()
-
             } else {
                 Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
             }
@@ -91,7 +89,8 @@ class MainActivity : AppCompatActivity() {
 
         btnShare.setOnClickListener {
             val content = findViewById<View>(R.id.meme_preview)
-            shareImage(MemeTools.createShareableMeme(content))
+            val dirPath = baseContext.getExternalFilesDir(memeDir)
+            shareImage(MemeTools.createShareableMeme(dirPath, content))
         }
 
         btnGo.setOnClickListener {
@@ -166,7 +165,7 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region utils
-    private fun shareImage(imageFile : File) {
+    private fun shareImage(imageFile: File) {
         val uri = FileProvider.getUriForFile(this@MainActivity, "com.example.lenovo.meme.provider", imageFile)
         val intent = Intent()
         intent.action = Intent.ACTION_SEND
@@ -185,5 +184,6 @@ class MainActivity : AppCompatActivity() {
 
         private const val MY_PERMISSION_REQUEST = 1
         private const val RESULT_LOAD_IMAGE = 2
+        private const val memeDir = "MEME"
     }
 }

@@ -1,7 +1,6 @@
 package com.example.lenovo.meme
 
 import android.graphics.Bitmap
-import android.os.Environment
 import android.util.Log
 import android.view.View
 import java.io.File
@@ -12,14 +11,9 @@ class MemeTools {
 
     companion object {
 
-        fun store(bm: Bitmap, fileName: String): Boolean {
-            val dirPath = Environment.getExternalStorageDirectory().absolutePath + "/MEME"
-            val dir = File(dirPath)
-            if (!dir.exists()) {
-                dir.mkdir()
-            }
+        fun storeMeme(bm: Bitmap, dirPath: File?): Boolean {
+            val fileName = "meme" + System.currentTimeMillis() + ".png"
             val file = File(dirPath, fileName)
-
             Log.d("PATH", file.absolutePath)
             return try {
                 val fos = FileOutputStream(file)
@@ -32,8 +26,7 @@ class MemeTools {
             }
         }
 
-        fun createShareableMeme(content: View): File {
-            val dirPath = Environment.getExternalStorageDirectory().absolutePath + "/MEME"
+        fun createShareableMeme(dirPath: File?, content: View): File {
             val imageName = "meme" + System.currentTimeMillis() + ".png"
             val bitmap = getScreenShot(content)
             val imageFile = File(dirPath, imageName)
