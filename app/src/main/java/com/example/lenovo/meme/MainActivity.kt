@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val content = findViewById<View>(R.id.meme_preview)
             val bitmap = getScreenShot(content)
-            val dirPath = baseContext.getExternalFilesDir(memeDir)
+            val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
             if (MemeTools.storeMeme(bitmap, dirPath)) {
                 Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show()
             } else {
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
         btnShare.setOnClickListener {
             val content = findViewById<View>(R.id.meme_preview)
-            val dirPath = baseContext.getExternalFilesDir(memeDir)
+            val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
             shareImage(MemeTools.createShareableMeme(dirPath, content))
         }
 
@@ -184,6 +184,6 @@ class MainActivity : AppCompatActivity() {
 
         private const val MY_PERMISSION_REQUEST = 1
         private const val RESULT_LOAD_IMAGE = 2
-        private const val memeDir = "MEME"
+        private const val MEME_DIR = "MEME"
     }
 }
