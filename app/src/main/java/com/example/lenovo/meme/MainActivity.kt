@@ -38,18 +38,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (ContextCompat.checkSelfPermission(this@MainActivity,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSION_REQUEST)
-            } else {
-                ActivityCompat.requestPermissions(this@MainActivity,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSION_REQUEST)
-            }
-        }
-
         ivMemePreview = findViewById(R.id.imageView)
 
         prevTextTop = findViewById(R.id.textView1)
@@ -72,6 +60,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnGo.setOnClickListener(this)
         btnClear.setOnClickListener(this)
 
+        requestPermissions()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -172,6 +161,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //region utils
+
+    private fun requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this@MainActivity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSION_REQUEST)
+            } else {
+                ActivityCompat.requestPermissions(this@MainActivity,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), MY_PERMISSION_REQUEST)
+            }
+        }
+    }
+
     private fun shareImage(imageFile: File) {
         val uri = FileProvider.getUriForFile(this@MainActivity, "com.example.lenovo.meme.provider", imageFile)
         val intent = Intent()
