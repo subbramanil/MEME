@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnShare = findViewById(R.id.btnShare)
         btnClear = findViewById(R.id.btnClear)
 
-        btnGo.text = getString(R.string.load_image_first_msg)
-
         btnLoad.setOnClickListener(this)
         btnSave.setOnClickListener(this)
         btnShare.setOnClickListener(this)
