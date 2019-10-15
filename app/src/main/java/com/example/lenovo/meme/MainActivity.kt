@@ -18,7 +18,7 @@ import androidx.core.content.FileProvider
 import com.example.lenovo.meme.MemeTools.Companion.getScreenShot
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var btnLoad: Button
     private lateinit var btnSave: Button
@@ -58,63 +58,20 @@ class MainActivity : AppCompatActivity() {
         inputTextTop = findViewById(R.id.editText1)
         inputTextBottom = findViewById(R.id.editText2)
 
-        btnGo = findViewById(R.id.go)
-        btnLoad = findViewById(R.id.load)
-        btnSave = findViewById(R.id.save)
-        btnShare = findViewById(R.id.share)
+        btnGo = findViewById(R.id.btnGo)
+        btnLoad = findViewById(R.id.btnLoad)
+        btnSave = findViewById(R.id.btnSave)
+        btnShare = findViewById(R.id.btnShare)
         btnClear = findViewById(R.id.btnClear)
 
         btnGo.text = getString(R.string.load_image_first_msg)
 
-        btnLoad.setOnClickListener {
-            val i = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(i, RESULT_LOAD_IMAGE)
-        }
+        btnLoad.setOnClickListener(this)
+        btnSave.setOnClickListener(this)
+        btnShare.setOnClickListener(this)
+        btnGo.setOnClickListener(this)
+        btnClear.setOnClickListener(this)
 
-        btnSave.setOnClickListener {
-            val content = findViewById<View>(R.id.meme_preview)
-            val bitmap = getScreenShot(content)
-            val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
-            if (MemeTools.storeMeme(bitmap, dirPath)) {
-                Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-            }
-            btnShare.isEnabled = true
-        }
-
-        btnShare.setOnClickListener {
-            val content = findViewById<View>(R.id.meme_preview)
-            val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
-            shareImage(MemeTools.createShareableMeme(dirPath, content))
-        }
-
-        btnGo.setOnClickListener {
-            prevTextTop.text = inputTextTop.text.toString()
-            preTextBottom.text = inputTextBottom.text.toString()
-
-            //Forces user to enter at least one line of text
-            if (inputTextTop.text.toString() != "" || inputTextBottom.text.toString() != "") {
-                textAdded = true
-            } else {
-                Toast.makeText(applicationContext, "Enter some text first!",
-                        Toast.LENGTH_SHORT).show()
-                textAdded = false
-                btnShare.isEnabled = false
-                btnSave.isEnabled = false
-            }
-            if (imageLoaded && textAdded) {
-                btnShare.isEnabled = true
-                btnSave.isEnabled = true
-            }
-        }
-
-        btnClear.setOnClickListener {
-            inputTextTop.setText("")
-            inputTextBottom.setText("")
-            btnShare.isEnabled = false
-            btnSave.isEnabled = false
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -159,6 +116,60 @@ class MainActivity : AppCompatActivity() {
     }
 
     //endregion
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnLoad -> {
+                val i = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(i, RESULT_LOAD_IMAGE)
+            }
+
+            R.id.btnGo -> {
+                prevTextTop.text = inputTextTop.text.toString()
+                preTextBottom.text = inputTextBottom.text.toString()
+
+                //Forces user to enter at least one line of text
+                if (inputTextTop.text.toString() != "" || inputTextBottom.text.toString() != "") {
+                    textAdded = true
+                } else {
+                    Toast.makeText(applicationContext, "Enter some text first!",
+                            Toast.LENGTH_SHORT).show()
+                    textAdded = false
+                    btnShare.isEnabled = false
+                    btnSave.isEnabled = false
+                }
+                if (imageLoaded && textAdded) {
+                    btnShare.isEnabled = true
+                    btnSave.isEnabled = true
+                }
+            }
+
+            R.id.btnShare -> {
+                val content = findViewById<View>(R.id.meme_preview)
+                val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
+                shareImage(MemeTools.createShareableMeme(dirPath, content))
+            }
+
+            R.id.btnSave -> {
+                val content = findViewById<View>(R.id.meme_preview)
+                val bitmap = getScreenShot(content)
+                val dirPath = baseContext.getExternalFilesDir(MEME_DIR)
+                if (MemeTools.storeMeme(bitmap, dirPath)) {
+                    Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+                }
+                btnShare.isEnabled = true
+            }
+
+            R.id.btnClear -> {
+                inputTextTop.setText("")
+                inputTextBottom.setText("")
+                btnShare.isEnabled = false
+                btnSave.isEnabled = false
+            }
+        }
+    }
 
     //region utils
     private fun shareImage(imageFile: File) {

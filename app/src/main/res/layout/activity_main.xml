@@ -37,7 +37,7 @@
             android:text="@string/btn_clear" />
 
         <Button
-            android:id="@+id/go"
+            android:id="@+id/btnGo"
             style="?android:buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:enabled="false"
@@ -56,7 +56,7 @@
         android:weightSum="3">
 
         <Button
-            android:id="@+id/load"
+            android:id="@+id/btnLoad"
             style="?android:buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:text="@string/btn_load" />
 
         <Button
-            android:id="@+id/save"
+            android:id="@+id/btnSave"
             style="?android:buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             android:text="@string/btn_save" />
 
         <Button
-            android:id="@+id/share"
+            android:id="@+id/btnShare"
             style="?android:buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
