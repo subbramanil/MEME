@@ -9,4 +9,10 @@
     <string name="btn_load">LOAD</string>
     <string name="btn_save">SAVE</string>
     <string name="btn_share">SHARE</string>
+    <string name="instruction_hint_1">Let\'s create an awesome meme</string>
+    <string name="instruction_hint_2">Start by selecting an image from Gallery</string>
+    <string name="btn_pick">Pick</string>
+    <string name="instruction_hint_3">Let\'s add some text at the top</string>
+    <string name="instruction_hint_4">Let\'s add some text at the bottom</string>
+    <string name="btn_preview">Preview</string>
 </resources>
